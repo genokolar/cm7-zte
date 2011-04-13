@@ -31,7 +31,7 @@ BOARD_NO_RGBX_8888 := true
 
 TARGET_NO_BOOTLOADER := true
 ifeq ($(TARGET_BLADE_BOARD_NAME),gen2)
-TARGET_PREBUILT_RECOVERY_ := device/zte/blade/recovery_kernel_gen2
+TARGET_PREBUILT_RECOVERY_KERNEL := device/zte/blade/recovery_kernel_gen2
 else
 TARGET_PREBUILT_RECOVERY_KERNEL := device/zte/blade/recovery_kernel_gen1
 endif
