@@ -1,0 +1,152 @@
+---------------
+构建环境：
+---------------
+
+添加java6源
+sudo add-apt-repository "deb http://archive.canonical.com/ maverick partner" 
+sudo apt-get update
+
+安装相关依赖
+CM社区建议：
+For 32-bit & 64-bit systems:
+sudo apt-get install git-core gnupg flex bison gperf libsdl1.2-dev libesd0-dev libwxgtk2.6-dev squashfs-tools build-essential zip curl libncurses5-dev zlib1g-dev sun-java6-jdk pngcrush schedtool
+For 64-bit only systems:
+sudo apt-get install g++-multilib lib32z1-dev lib32ncurses5-dev lib32readline5-dev gcc-4.3-multilib g++-4.3-multilib
+
+谷歌官方建议64-bit：
+sudo apt-get install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev ia32-libs x11proto-core-dev libx11-dev lib32readline5-dev lib32z-dev
+
+
+设置默认java版本
+sudo update-alternatives --config java
+查看当前java版本
+java -version
+
+-----------------
+下载源码：
+-----------------
+
+构建目录
+mkdir -p ~/bin 
+mkdir -p ~/*源码目录*
+
+下载安装repo
+Enter the following to download make executable the "repo" binary:
+curl http://android.git.kernel.org/repo > ~/bin/repo 
+chmod a+x ~/bin/repo
+PATH=$PATH:~/bin
+
+同步源码
+cd ~/*源码目录*
+repo init -u git://github.com/CyanogenMod/android.git -b gingerbread 
+repo sync -j5
+
+--------------------
+打上补丁
+-------------------
+下载此补丁覆盖到源码目录
+
+linux git补丁：
+
+mkdir ~/cm7-zte
+cd cm7-zte
+git init
+git pull git://github.com/genokolar/cm7-zte.git
+
+
+获取Google服务：
+执行vendor/cyanogen/get-google-files
+
+获取rommanager
+执行vendor/cyanogen/get-rommanger
+
+------------------
+编译
+------------------
+source build/env*
+lunch
+
+由于CM的源码使用了非公开API，所以编译前需要：
+make update-api
+
+make -j2  
+或者错误输出到日志
+make -j2 2>log.txt 
+或者全部输出到日志
+make -j2 &>log.txt
+-------------------------------------------
+CM官方提供编译命令
+. build/envsetup.sh && brunch raise -j2
+--------------------------------------------
+
+
+--------------
+GIT简单使用说明
+--------------
+
+使用GitHub步骤：
+1、申请GitHub帐户 xxx ，创建名为new-project的新Repository 
+
+2、安装Git客户端（Linux）
+#yum install git git-gui
+
+3、 生成密钥对，这样项目可以push到 GitHub上
+#ssh-keygen -t rsa -C "xxx@gmail.com"
+
+4、将.ssh/id_rsa.pub拷贝到GitHub网站
+
+5、为了方便，设置ssh不输入口令
+# eval `ssh-agent`
+# ssh-add
+（输入passphrase）
+
+6、测试是否能联通GitHub
+#ssh git@github.com
+如果配置正确，显示
+ERROR: Hi xxx! You've successfully authenticated, but GitHub does not provide shell access
+Connection to github.com closed.
+
+7、设置Git全局用户配置
+# git config --global user.name "xxx"
+# git config --global user.email xxx@gmail.com
+
+8、创建本地新项目工作树
+# mkdir new-project
+# cd new-project
+# git init
+# touch README
+# git add README
+# git commit -m 'first commit'
+定义远程服务器别名origin
+#  git remote add origin git@github.com:xxx/new-project.git   
+本地和远程合并，本地默认分支为master
+# git push origin master  
+
+GitHub网站上就可以看见了， http://github.com/xxx/new-project
+
+9、更新文件
+# vi README
+自动commit更改文件
+# git commit -a     
+更新至远程
+# git push origin master
+
+10、创建和合并分支
+#git branch 显示当前分支是master
+#git branch new-feature  创建分支
+# git checkout new-feature 切换到新分支
+# vi page_cache.inc.php
+# git add page_cache.inc.php
+Commit 到本地GIT
+# git commit -a -m "added initial version of page cache"
+合并到远程服务器
+# git push origin new-feature
+
+如果new-feature分支成熟了，觉得有必要合并进master
+#git checkout master
+#git merge new-feature
+#git branch
+#git push 
+则master中也合并了new-feature 的代码
+
+再登录到GitHub可以看见"Switch Branches"下的分支选项
