@@ -36,7 +36,7 @@ else
             ro.modversion=CyanogenMod-7.0.0-RC4-raise
     else
         PRODUCT_PROPERTY_OVERRIDES += \
-            ro.modversion=CyanogenMod-7.0.0-RC4-raise-KANG
+            ro.modversion=CyanogenMod-7.0.0-RC4-raise-Geno
     endif
 endif
 
