@@ -123,7 +123,6 @@ PRODUCT_COPY_FILES += \
 
 #Kernel Modules
 PRODUCT_COPY_FILES += \
-    device/zte/raise/prebuilt/cifs.ko:system/lib/modules/2.6.32.9-perf/cifs.ko \
     device/zte/raise/prebuilt/zram.ko:system/lib/modules/2.6.32.9-perf/zram.ko \
     device/zte/raise/prebuilt/ar6000.ko:system/wifi/ar6000.ko \
     device/zte/raise/prebuilt/hostapd:system/bin/hostapd \
